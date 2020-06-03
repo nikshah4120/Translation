@@ -8,33 +8,27 @@ const outputFileName="output_en_US.json"; //Output File where untranslated label
 var  outputObject={};
 const folderPath=path.resolve(__dirname,folderName);  //Path of folder where all json file of loacales kept.
 const mainFilePath=path.resolve(folderPath,mainFileName); //Path of en_US.json File
-
+var fileNames=fs.readdirSync(folderPath); // All .json files
 /* Reading and extracting labels */
-var data=jsonfile.readFileSync(mainFilePath,function(err){
-    if(err) console.log(err);
-});
+var data=jsonfile.readFileSync(mainFilePath);
 
 var labelList=Object.keys(data); // List of all labels;
-var fileNames=fs.readdirSync(folderPath);
+
 /* Checking whether label exists in translated file or not . */
 fileNames.forEach(file=>{
-    var checkFile=path.resolve(folderPath,file); //Path to the file of different languages
+    let checkFile=path.resolve(folderPath,file); //Path to the file of different languages
     if(checkFile!== mainFilePath){
-        data=jsonfile.readFileSync(checkFile,function(err){
-            if(err) console.log(err);
-        });
-        var translatedLabels=Object.keys(data);
+        data=jsonfile.readFileSync(checkFile);
+        let translatedLabels=Object.keys(data);
         labelList.forEach(label => {
-            if(translatedLabels.indexOf(label)===-1&& !(label in outputObject)){
+            if(translatedLabels.indexOf(label)===-1){
                 outputObject[label]=label;   //If label is missing from any of the translated file it will be added to the output file for translation again
             }      
         });
     }
 });
 /* Creating output File */
-jsonfile.writeFileSync(outputFileName,outputObject,function(err){
-    if(err) console.error(err);
-})
+jsonfile.writeFileSync(outputFileName,outputObject,{spaces : 1});
 
 
 

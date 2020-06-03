@@ -12,37 +12,30 @@ var fileNames=fs.readdirSync(folderPath);
 var numberOfFiles=fileNames.length;
 
 /* Reading and extracting labels */
-var data=jsonfile.readFileSync(mainFilePath,function(err){
-    if(err) console.log(err);
-});
+var labelList=Object.keys(jsonfile.readFileSync(mainFilePath));
 
-var labelList=Object.keys(data); // List of all labels;
+//var labelList=Object.keys(data); // List of all labels;
 var isExist={}; //holds count as value where count=number of different files where label is present.
 labelList.forEach((label)=>{
-    isExist[label]=1;
+    isExist[label]= 1;                                                                      
 })
 
 /* Checking whether label exists in translated file or not . */
 fileNames.forEach(file=>{
     let checkFile=path.resolve(folderPath,file); //Path to the file of different languages
     if(checkFile!== mainFilePath){
-        data=jsonfile.readFileSync(checkFile,function(err){
-            if(err) console.log(err);
-        });    
-        Object.keys(data).forEach(item =>{
+        data=Object.keys(jsonfile.readFileSync(checkFile));    
+        data.forEach(item => {
             isExist[item]+=1;
         }); 
     }
 });
 labelList.forEach(label => {
-    if(isExist[label]!== numberOfFiles){            //If label is not present in all files will be added in output file
-        outputObject[label]=label;       
+    if(isExist[label] !== numberOfFiles){            //If label is not present in all files will be added in output file
+        outputObject[label] = label;       
     }
 });
+
+
 /* Creating output File */
-jsonfile.writeFileSync(outputFileName,outputObject,{spaces : 1},function(err){
-    if(err) console.error(err);
-})
-
-
-
+jsonfile.writeFileSync(outputFileName,outputObject,{spaces : 1})
