@@ -3,3 +3,4 @@ jsongenerator.js
 package-lock.json
 run.sh
 template.json
+findNewTranslations.js
