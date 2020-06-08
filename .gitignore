@@ -1,6 +1,7 @@
 node_modules
-jsongenerator.js
+translations/
+merge/
 package-lock.json
 run.sh
 template.json
-findNewTranslations.js
+output_en_US.json
