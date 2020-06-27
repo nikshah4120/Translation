@@ -5,3 +5,4 @@ package-lock.json
 run.sh
 template.json
 output_en_US.json
+findNewTranslations.js
