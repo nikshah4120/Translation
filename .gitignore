@@ -1,8 +1,5 @@
-node_modules
-translations/
+node_modules/
+/run.sh
+/template.json
 merge/
-package-lock.json
-run.sh
-template.json
-output_en_US.json
-findNewTranslations.js
+/package-lock.json
